@@ -1,0 +1,16 @@
+#Unreal Generated Files
+
+*/Binaries
+*/Build
+*/DerivedDataCache
+*/Intermediate
+*/Saved
+*/Content/StarterContent
+*/.vs/BuildingEscape/v15/ipch
+
+# VS Generated Files
+*VC.db*
+*.[Ss]uo
+
+#git cant open it
+*.VC.opendb*
