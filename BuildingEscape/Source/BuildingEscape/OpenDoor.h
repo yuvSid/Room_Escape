@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Engine/TriggerVolume.h"
+#include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Controller.h"
 #include "OpenDoor.generated.h"
@@ -24,6 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void OpenDoor();
+	void CloseDoor();
 
 public:	
 	// Called every frame
@@ -31,11 +33,17 @@ public:
 
 private:
 	UPROPERTY( VisibleAnywhere )
-		float OpenAngle = 90.0f;
+	float OpenAngle = 90.0f;
 
 	UPROPERTY( EditAnywhere )
-		ATriggerVolume * PressurePlate;
+	ATriggerVolume * PressurePlate;
+
+	UPROPERTY( EditAnywhere )
+	float DoorCloseDelay =1.f;
+
+	float LastOpenDoorTime;
 
 	AActor * ActorThatOpens;
+	AActor * Owner;
 		
 };
