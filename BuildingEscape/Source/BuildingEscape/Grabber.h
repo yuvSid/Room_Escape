@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
+#include "Public/DrawDebugHelpers.h"
+#include "Public/CollisionQueryParams.h"
 #include "Grabber.generated.h"
 
 
@@ -23,6 +27,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+	//How far ahead of the player can we reach in cm
+	float Reach = 100.f;
 
 		
 };
