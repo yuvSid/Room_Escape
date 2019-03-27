@@ -10,6 +10,7 @@
 #include "Public/CollisionQueryParams.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Components/InputComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Grabber.generated.h"
 
 
@@ -25,6 +26,8 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	
 
 public:	
 	// Called every frame
@@ -43,4 +46,15 @@ private:
 	
 	// Calles when Grab key is released
 	void Release();
+
+	// Fins (assumed) attached physics handle
+	void FindPhysicsHandleComponent();
+
+	// Setup (assumed) attached input component
+	void SetupInputComponent();
+
+	// Return hit for first physics body in reach
+	FHitResult GetFitstPhysicsBodyInReach() const;
 };
+
+
