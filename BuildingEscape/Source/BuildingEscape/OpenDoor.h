@@ -8,6 +8,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Controller.h"
+#include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
 
@@ -31,6 +32,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	
+
 private:
 	UPROPERTY( VisibleAnywhere )
 	float OpenAngle = 90.0f;
@@ -39,11 +42,15 @@ private:
 	ATriggerVolume * PressurePlate;
 
 	UPROPERTY( EditAnywhere )
+	float MassTrigerPlate = 20.f;
+
+	UPROPERTY( EditAnywhere )
 	float DoorCloseDelay =1.f;
 
 	float LastOpenDoorTime;
 
-	AActor * ActorThatOpens;
 	AActor * Owner;
+
+	float GetTotalMassOfActorsOnPlate();
 		
 };
