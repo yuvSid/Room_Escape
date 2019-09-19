@@ -20,7 +20,11 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Owner = GetOwner();	
+	Owner = GetOwner();
+	if ( !Owner )
+		UE_LOG( LogTemp, Error, TEXT( "%s no owner provided" ), *GetOwner()->GetName() );
+	if ( !PressurePlate )
+		UE_LOG( LogTemp, Error, TEXT( "%s missing pressure plate setting" ), *GetOwner()->GetName() );
 }
 
 
@@ -49,6 +53,8 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 
 	// Find all the overlapping actors
 	TArray< AActor * > OverlappingActors;
+	if ( !PressurePlate )	
+		return TotalMass;
 	PressurePlate->GetOverlappingActors( OUT OverlappingActors );
 
 	// Iterate through them assing their masses
@@ -63,15 +69,18 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 
 void UOpenDoor::OpenDoor()
 {
-	Owner->SetActorRotation(
-		FRotator( 0.f, OpenAngle, 0.f ),
-		ETeleportType::None );
+	if ( Owner )
+		Owner->SetActorRotation(
+			FRotator( 0.f, OpenAngle, 0.f ),
+			ETeleportType::None );
+		
 }
 
 void UOpenDoor::CloseDoor()
 {
-	Owner->SetActorRotation(
-		FRotator( 0.f, 0.f, 0.f ),
-		ETeleportType::None );
+	if ( Owner )		
+		Owner->SetActorRotation(
+			FRotator( 0.f, 0.f, 0.f ),
+			ETeleportType::None );	
 }
 

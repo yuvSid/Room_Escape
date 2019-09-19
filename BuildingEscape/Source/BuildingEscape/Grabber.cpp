@@ -27,7 +27,7 @@ void UGrabber::BeginPlay()
 void UGrabber::FindPhysicsHandleComponent()
 {
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if ( PhysicsHandle == nullptr )
+	if ( !PhysicsHandle )
 	{
 		UE_LOG( LogTemp, Error, TEXT( "%s missing physics handle component" ), *GetOwner()->GetName() );
 	}
@@ -56,7 +56,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	
 	// if the physics handle is attached
-	if ( PhysicsHandle->GrabbedComponent )
+	if ( PhysicsHandle && PhysicsHandle->GrabbedComponent )
 	{
 		// move the object that we're holding
 		PhysicsHandle->SetTargetLocation( GetReachLineEnd() );
@@ -71,7 +71,7 @@ void UGrabber::Grab()
 	AActor * ActorHit = HitResult.GetActor();
 
 	// If we hit something then attacg a physics handle
-	if ( ActorHit )
+	if ( PhysicsHandle && ActorHit )
 	{
 		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			ComponentToGrab,
@@ -84,7 +84,8 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+	if ( PhysicsHandle )
+		PhysicsHandle->ReleaseComponent();
 }
 
 FHitResult UGrabber::GetFitstPhysicsBodyInReach() const
