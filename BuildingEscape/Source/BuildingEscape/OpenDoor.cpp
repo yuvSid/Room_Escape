@@ -36,14 +36,11 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	// Poll the trigger Volume
 	if ( GetTotalMassOfActorsOnPlate() > MassTrigerPlate )	
 	{
-		OpenDoor();
-		LastOpenDoorTime = GetWorld()->GetTimeSeconds();
+		OnOpen.Broadcast();
 	}
-
-	// Checks if time delay is over and door must be closed
-	if ( GetWorld()->GetTimeSeconds() - LastOpenDoorTime > DoorCloseDelay )
+	else
 	{
-		CloseDoor();
+		OnClose.Broadcast();
 	}
 }
 
@@ -66,21 +63,3 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 
 	return TotalMass;
 }
-
-void UOpenDoor::OpenDoor()
-{
-	if ( Owner )
-		Owner->SetActorRotation(
-			FRotator( 0.f, OpenAngle, 0.f ),
-			ETeleportType::None );
-		
-}
-
-void UOpenDoor::CloseDoor()
-{
-	if ( Owner )		
-		Owner->SetActorRotation(
-			FRotator( 0.f, 0.f, 0.f ),
-			ETeleportType::None );	
-}
-
